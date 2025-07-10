@@ -1,6 +1,6 @@
 
 function removeActiveClass() {
-    const activeButtons = document.getElementsByClassName = "active";
+    const activeButtons = Array.from(document.getElementsByClassName("active"));
     for (let btn of activeButtons) {
         btn.classList.remove("active");
     }
@@ -14,49 +14,35 @@ function loadCategories() {
 
 }
 
-
 // Display video categories
 function displayCategories(categories) {
    
     const categoryContainer = document.getElementById("category-container");
 
     for (const cate of categories) {
-        //console.log(cate);
+
         const categoryDiv = document.createElement("div");
-        categoryDiv.innerHTML = `
-        
+
+        categoryDiv.innerHTML = `     
          <button id="btn-${cate.category_id}" onclick="loadCategoryVideos(${cate.category_id})" class="btn btn-sm hover:bg-[#FF1F3D] hover:text-white">${cate.category}</button>
         `
         categoryContainer.append(categoryDiv);
 
     }
 }
+
+
+
 function loadVideos() {
     fetch("https://openapi.programming-hero.com/api/phero-tube/videos")
         .then((res) => res.json())
-        // .then((data)=>(data.videos));
-        .then((data) => displayVideos(data.videos));
-}
-
-//Category wise load videos
-const loadCategoryVideos = (id) => {
-
-    const url = `https://openapi.programming-hero.com/api/phero-tube/category/${id}`
-    console.log(url);
-    fetch(url)
-        .then((res) => res.json())
         .then((data) => {
-             removeActiveClass();
 
-            document.getElementById="btn-all".classList.add("active");
-            const clickedButton = document.getElementById = `btn-${id}`;
-            clickedButton.classList.add("active");
-            
-            displayVideos(data.category)
+            removeActiveClass();
+            document.getElementById("btn-all").classList.add("active");          
+            displayVideos(data.videos);
         });
 }
-
-//Display Videos
 
 const displayVideos = (videos) => {
     // console.log(videos);
@@ -110,7 +96,29 @@ const displayVideos = (videos) => {
 
 }
 
+//Category wise load videos
+const loadCategoryVideos = (id) => {
+
+    const url = `https://openapi.programming-hero.com/api/phero-tube/category/${id}`
+    console.log(url);
+    fetch(url)
+        .then((res) => res.json())
+        .then((data) => {
+
+             removeActiveClass();
+
+            const clickedButton = document.getElementById(`btn-${id}`);
+            clickedButton.classList.add("active");
+            
+            displayVideos(data.category)
+        });
+}
+
+//Display Videos
+
+
+
 loadCategories();
 
-// loadVideos(); //This function is called by html button Onclick function.
+
 
