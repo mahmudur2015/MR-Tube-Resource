@@ -8,6 +8,12 @@
 
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        .active {
+            background-color: #FF1F3D;
+            color: white;
+        }
+    </style>
 
 </head>
 
@@ -28,11 +34,15 @@
     </header>
 
     <nav id="category-container" class="flex justify-center py-5 gap-5">
-        <div><button onclick="loadVideos()" class="btn btn-sm bg-[#FF1F3D]">All</button></div>
+        <div><button id="btn-all" onclick="loadVideos()" class="btn btn-sm bg-[#FF1F3D]">All</button>
+        </div>
     </nav>
 
     <section id="video-container" class="w-11/12 mx-auto  grid grid-cols-4 gap-5">
-
+        <div class=" col-span-full flex flex-col text-center justify-center items-center py-20">
+            <img class="w-[120px]" src="assets/Icon.png" alt="">
+            <h2 class="text-2xl font-bold">Oops!! Sorry, There is no content here</h2>
+        </div>
 
     </section>
 
