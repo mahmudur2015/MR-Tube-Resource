@@ -31,8 +31,8 @@ function displayCategories(categories) {
     }
 }
 
-function loadVideos() {
-    fetch("https://openapi.programming-hero.com/api/phero-tube/videos")
+function loadVideos(searchText = "") {
+    fetch(`https://openapi.programming-hero.com/api/phero-tube/videos?title=${searchText}`)
         .then((res) => res.json())
         .then((data) => {
 
@@ -79,7 +79,9 @@ const displayVideos = (videos) => {
                 <div class="intro">
                     <h2 class=" text-sm font-semibold">Midnight Serenade</h2>
                     <p class="text-sm text-gray-400 flex gap-1">${video.authors[0].
-                profile_name}<img class="w-5 h-5" src="https://img.icons8.com/?size=48&id=98A4yZTt9abw&format=png" alt=""></p>
+                profile_name} ${video.authors[0].verified == true ? `
+                    <img class="w-5 h-5" src="https://img.icons8.com/?size=48&id=98A4yZTt9abw&format=png" alt="">
+                    ` : ``}</p>
                     <p class="text-sm text-gray-400">${video.others.views} views</p>
                 </div>
             </div>
@@ -125,8 +127,8 @@ const displayVideoDetails = (video) => {
     console.log(video);
     document.getElementById("video_details").showModal()
 
-    const detailsContainer=document.getElementById("details-container");
-    detailsContainer.innerHTML=`
+    const detailsContainer = document.getElementById("details-container");
+    detailsContainer.innerHTML = `
     <div class="card bg-base-100  shadow-sm">
   <figure>
     <img
@@ -143,14 +145,14 @@ const displayVideoDetails = (video) => {
                     <div class="avatar">
                         <div class="ring-primary ring-offset-base-100 w-6 rounded-full ring-2 ring-offset-2">
                             <img src="${video.authors[0].
-                profile_picture
-            }" />
+            profile_picture
+        }" />
                         </div>
                     </div>
                 </div>
       <div class="badge badge-outline">
       <p class="text-sm text-black flex gap-1">${video.authors[0].
-                profile_name}</p>
+            profile_name}</p>
       </div>
     </div>
   </div>
@@ -161,6 +163,12 @@ const displayVideoDetails = (video) => {
 
 }
 
+
+document.getElementById("search-input").addEventListener("keyup", (e) => {
+
+    const input = e.target.value;
+    loadVideos(input);
+})
 
 
 
